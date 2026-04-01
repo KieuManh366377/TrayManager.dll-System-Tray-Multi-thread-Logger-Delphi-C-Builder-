@@ -1,110 +1,112 @@
-# 🚀 TrayManager.dll – System Tray + Multi-thread Logger (Delphi / C++Builder)
-
-> 🔥 Thư viện **C++Builder DLL** giúp bạn tạo ứng dụng chạy nền dưới **System Tray**  
-> + Logger đa luồng + Callback realtime
+OK 👍 đây là bản **siêu gọn – copy lên GitHub là đẹp ngay**:
 
 ---
 
-## ✨ Tính năng chính
+````md
+# 🚀 TrayManager.dll – System Tray + Multi-thread Logger
 
-### 🖥️ System Tray Manager
-- 🧩 Tạo icon dưới khay hệ thống (System Tray)
-- 💬 Tooltip (Hint) động
-- 🔔 Hiển thị thông báo (Balloon)
-- 🖱️ Xử lý click / double-click
-- ❌ Callback khi chọn Exit từ menu tray
-- 🎨 Truyền icon từ EXE (tránh icon mờ)
+> 🔥 DLL C++Builder giúp tạo app chạy nền (System Tray) + Logger đa luồng + Callback realtime
 
 ---
 
-### 🧵 Multi-thread Logger Engine
-- ⚡ Ghi log đa luồng (thread-safe)
-- 🏷️ Hỗ trợ level:
-  - 🐞 Debug
-  - ℹ️ Info
-  - ⚠️ Warning
-  - ❌ Error
-- 📁 Tự tạo file log
-- 🧠 Non-blocking (hiệu năng cao)
+## ✨ Features
+
+### 🖥️ System Tray
+- Icon + Tooltip
+- Balloon notification
+- Click / Double-click
+- Exit callback
+- Truyền icon từ EXE (không mờ)
+
+### 🧵 Logger
+- Multi-thread (thread-safe)
+- Levels: Debug / Info / Warn / Error
+- Non-blocking, hiệu năng cao
+- Tự tạo file log
+
+### 🔁 Callback
+- Nhận log realtime
+- Hiển thị UI / debug / forward
+
+### 🌐 Unicode
+- Dùng `PWideChar`
+- Hỗ trợ tiếng Việt
 
 ---
 
-### 🔁 Realtime Log Callback
-- 📡 Nhận log ngay khi được ghi
-- 🔌 Dùng để:
-  - Hiển thị log lên UI
-  - Debug realtime
-  - Forward sang hệ thống khác
+## 📦 SDK
 
----
-
-### 🌐 Unicode Ready
-- ✅ Sử dụng `PWideChar`
-- ✅ Hỗ trợ tiếng Việt đầy đủ
-
----
-
-## 📦 Cấu trúc SDK
-
-```
-
+```text
 TrayManager_SDK/
-│
-├── AppTrayBootstrap.pas   // 🔥 Entry point (1 dòng là chạy)
-├── TrayManagerSDK.pas     // System Tray API (icon, tooltip, balloon, callback)
-├── LoggerCoreSDK.pas      // Logger API (multi-thread + callback)
-├── LoggerCoreHelper.pas   // Wrapper tiện lợi cho EXE
-├── SingleInstanceSDK.pas  // Chống chạy nhiều instance
-│
-└── TrayManager.dll        // ⚠️ Bắt buộc (core engine)
+├── AppTrayBootstrap.pas
+├── TrayManagerSDK.pas
+├── LoggerCoreSDK.pas
+├── LoggerCoreHelper.pas
+├── SingleInstanceSDK.pas
+└── TrayManager.dll   (required)
+````
 
 ---
 
-## 🧩 Mô tả các thành phần
+## ⚡ Quick Start
 
-| File | Mô tả |
-|------|------|
-| `AppTrayBootstrap.pas` | Entry point, gom toàn bộ init (tray + startup + UI) |
-| `TrayManagerSDK.pas` | Giao tiếp với DLL để quản lý System Tray |
-| `LoggerCoreSDK.pas` | API logging đa luồng + callback realtime |
-| `LoggerCoreHelper.pas` | Hàm wrapper giúp gọi log dễ hơn |
-| `SingleInstanceSDK.pas` | Đảm bảo chỉ chạy 1 instance |
-| `TrayManager.dll` | Core engine viết bằng C++Builder |
+### DPR
+
+```delphi
+AppAuto_Initialize;
+```
+
+### Form
+
+```delphi
+procedure ExitApp; stdcall;
+begin
+  AllowCloseGlobal := True;
+  Application.Terminate;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  AppTray_Init(Self, 'MyApp', 'App đang chạy', @ExitApp);
+end;
+```
 
 ---
 
-## ⚙️ Cách hoạt động
+## ⚙️ Architecture
 
+```text
+Delphi EXE
+   ↓
+Pascal SDK
+   ↓
+TrayManager.dll
+   ↓
+Windows API
 ```
-
-[ Delphi EXE ]
-↓
-[ SDK (Pascal units) ]
-↓
-[ TrayManager.dll (C++Builder) ]
-↓
-[ Windows API (Tray + Thread + File IO) ]
-
-```
-
-👉 Kiến trúc này giúp:
-- 🔌 Tách biệt UI và engine
-- 🔁 Dễ reuse cho nhiều project
-- ⚡ Tối ưu hiệu năng (DLL xử lý nặng)
 
 ---
 
-## 🚀 Luồng khởi động
+## 🚀 Behavior
 
-1. `AppAuto_Initialize` (trong `.dpr`)
-2. `AppTray_Init` (trong `FormCreate`)
-3. DLL khởi tạo:
-   - Tray icon
-   - Logger thread
-   - Callback
-4. Ứng dụng chạy:
-   - Normal → hiện form
-   - Startup → ẩn xuống tray
+* 🟢 Run normally → hiện form
+* ⚫ Run with Windows → chạy nền (tray)
 
+---
+
+## ⚠️ Note
+
+* `TrayManager.dll` phải cùng thư mục EXE
+* Callback phải `stdcall`
+* Windows only
+
+---
+
+## 👨‍💻 Author
+
+Kieu Manh
+
+
+
+Nếu muốn “ngầu hơn” nữa mình sẽ làm bản có **badge + banner + tiếng Anh** 👍
 ```
-
