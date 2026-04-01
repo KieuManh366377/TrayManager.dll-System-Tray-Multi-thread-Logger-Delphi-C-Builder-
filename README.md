@@ -1,104 +1,96 @@
-OK 👍 đây là bản **siêu gọn – copy lên GitHub là đẹp ngay**:
 
----
-
-````md
 # 🚀 TrayManager.dll – System Tray + Multi-thread Logger
 
-> 🔥 DLL C++Builder giúp tạo app chạy nền (System Tray) + Logger đa luồng + Callback realtime
+🔥 Thư viện DLL viết bằng C++Builder giúp tạo ứng dụng chạy nền dưới System Tray, kèm Logger đa luồng và callback realtime.
 
 ---
 
-## ✨ Features
+## ✨ Tính năng
 
 ### 🖥️ System Tray
-- Icon + Tooltip
-- Balloon notification
-- Click / Double-click
-- Exit callback
-- Truyền icon từ EXE (không mờ)
+
+* Tạo icon dưới khay hệ thống
+* Tooltip (hint) động
+* Hiển thị thông báo (balloon)
+* Xử lý click / double-click
+* Callback khi chọn Exit
+* Truyền icon từ EXE (không bị mờ)
 
 ### 🧵 Logger
-- Multi-thread (thread-safe)
-- Levels: Debug / Info / Warn / Error
-- Non-blocking, hiệu năng cao
-- Tự tạo file log
 
-### 🔁 Callback
-- Nhận log realtime
-- Hiển thị UI / debug / forward
+* Ghi log đa luồng (thread-safe)
+* Hỗ trợ Debug / Info / Warn / Error
+* Không block (hiệu năng cao)
+* Tự tạo file log
+
+### 🔁 Callback realtime
+
+* Nhận log ngay khi ghi
+* Dùng để hiển thị UI hoặc debug
 
 ### 🌐 Unicode
-- Dùng `PWideChar`
-- Hỗ trợ tiếng Việt
+
+* Dùng PWideChar
+* Hỗ trợ tiếng Việt đầy đủ
 
 ---
 
-## 📦 SDK
+## 📦 Cấu trúc
 
-```text
-TrayManager_SDK/
-├── AppTrayBootstrap.pas
-├── TrayManagerSDK.pas
-├── LoggerCoreSDK.pas
-├── LoggerCoreHelper.pas
-├── SingleInstanceSDK.pas
-└── TrayManager.dll   (required)
-````
+TrayManager_SDK gồm các thành phần:
+
+* AppTrayBootstrap.pas → khởi tạo toàn bộ ứng dụng
+* TrayManagerSDK.pas → quản lý system tray
+* LoggerCoreSDK.pas → API logging
+* LoggerCoreHelper.pas → helper gọi log
+* SingleInstanceSDK.pas → chống chạy nhiều instance
+* TrayManager.dll → core engine (bắt buộc)
 
 ---
 
-## ⚡ Quick Start
+## ⚡ Sử dụng nhanh
 
-### DPR
+Trong file .dpr:
 
-```delphi
 AppAuto_Initialize;
-```
 
-### Form
+Trong Form:
 
-```delphi
 procedure ExitApp; stdcall;
 begin
-  AllowCloseGlobal := True;
-  Application.Terminate;
+AllowCloseGlobal := True;
+Application.Terminate;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-  AppTray_Init(Self, 'MyApp', 'App đang chạy', @ExitApp);
+AppTray_Init(Self, 'MyApp', 'App đang chạy', @ExitApp);
 end;
-```
 
 ---
 
-## ⚙️ Architecture
+## ⚙️ Kiến trúc
 
-```text
-Delphi EXE
-   ↓
-Pascal SDK
-   ↓
-TrayManager.dll
-   ↓
-Windows API
-```
+Delphi EXE → Pascal SDK → TrayManager.dll → Windows API
+
+✔ Tách biệt UI và engine
+✔ Dễ tái sử dụng
+✔ Hiệu năng cao
 
 ---
 
-## 🚀 Behavior
+## 🚀 Hoạt động
 
-* 🟢 Run normally → hiện form
-* ⚫ Run with Windows → chạy nền (tray)
+* Chạy bình thường → hiển thị form
+* Chạy cùng Windows → ẩn xuống tray
 
 ---
 
-## ⚠️ Note
+## ⚠️ Lưu ý
 
-* `TrayManager.dll` phải cùng thư mục EXE
-* Callback phải `stdcall`
-* Windows only
+* TrayManager.dll phải cùng thư mục EXE
+* Callback phải dùng stdcall
+* Chỉ hỗ trợ Windows
 
 ---
 
@@ -106,7 +98,5 @@ Windows API
 
 Kieu Manh
 
+---
 
-
-Nếu muốn “ngầu hơn” nữa mình sẽ làm bản có **badge + banner + tiếng Anh** 👍
-```
