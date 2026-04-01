@@ -1,102 +1,110 @@
+---
 
 # 🚀 TrayManager.dll – System Tray + Multi-thread Logger
 
-🔥 Thư viện DLL viết bằng C++Builder giúp tạo ứng dụng chạy nền dưới System Tray, kèm Logger đa luồng và callback realtime.
+🔥 A lightweight **C++Builder DLL** for building Windows tray applications with a **multi-threaded logger** and **real-time callbacks**.
 
 ---
 
-## ✨ Tính năng
+## ✨ Features
 
 ### 🖥️ System Tray
 
-* Tạo icon dưới khay hệ thống
-* Tooltip (hint) động
-* Hiển thị thông báo (balloon)
-* Xử lý click / double-click
-* Callback khi chọn Exit
-* Truyền icon từ EXE (không bị mờ)
-
-### 🧵 Logger
-
-* Ghi log đa luồng (thread-safe)
-* Hỗ trợ Debug / Info / Warn / Error
-* Không block (hiệu năng cao)
-* Tự tạo file log
-
-### 🔁 Callback realtime
-
-* Nhận log ngay khi ghi
-* Dùng để hiển thị UI hoặc debug
-
-### 🌐 Unicode
-
-* Dùng PWideChar
-* Hỗ trợ tiếng Việt đầy đủ
+* Tray icon with dynamic tooltip
+* Balloon notifications
+* Click / double-click handling
+* Exit callback support
+* Pass icon from EXE (no blurry icons)
 
 ---
 
-## 📦 Cấu trúc
+### 🧵 Multi-thread Logger
 
-TrayManager_SDK gồm các thành phần:
-
-* AppTrayBootstrap.pas → khởi tạo toàn bộ ứng dụng
-* TrayManagerSDK.pas → quản lý system tray
-* LoggerCoreSDK.pas → API logging
-* LoggerCoreHelper.pas → helper gọi log
-* SingleInstanceSDK.pas → chống chạy nhiều instance
-* TrayManager.dll → core engine (bắt buộc)
+* Thread-safe logging
+* Levels: Debug / Info / Warning / Error
+* Non-blocking (high performance)
+* Automatic log file creation
 
 ---
 
-## ⚡ Sử dụng nhanh
+### 🔁 Real-time Callback
 
-Trong file .dpr:
+* Receive logs instantly
+* Useful for UI display or debugging
+* Can forward logs to external systems
+
+---
+
+### 🌐 Unicode Ready
+
+* Uses `PWideChar`
+* Full Unicode / Vietnamese support
+
+---
+
+## 📦 SDK Structure
+
+TrayManager_SDK includes:
+
+* **AppTrayBootstrap.pas** → App initialization (1 line setup)
+* **TrayManagerSDK.pas** → System tray API
+* **LoggerCoreSDK.pas** → Logging API
+* **LoggerCoreHelper.pas** → Helper functions
+* **SingleInstanceSDK.pas** → Prevent multiple instances
+* **TrayManager.dll** → Core engine (**required**)
+
+---
+
+## ⚡ Quick Start
+
+In `.dpr`:
 
 AppAuto_Initialize;
 
-Trong Form:
+In your main form:
 
+```delphi
 procedure ExitApp; stdcall;
 begin
-AllowCloseGlobal := True;
-Application.Terminate;
+  AllowCloseGlobal := True;
+  Application.Terminate;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-AppTray_Init(Self, 'MyApp', 'App đang chạy', @ExitApp);
+  AppTray_Init(Self, 'MyApp', 'App is running', @ExitApp);
 end;
+```
 
 ---
 
-## ⚙️ Kiến trúc
+## ⚙️ Architecture
 
 Delphi EXE → Pascal SDK → TrayManager.dll → Windows API
 
-✔ Tách biệt UI và engine
-✔ Dễ tái sử dụng
-✔ Hiệu năng cao
+✔ Clean separation between UI and core engine
+✔ Easy to reuse across projects
+✔ High performance (native DLL processing)
 
 ---
 
-## 🚀 Hoạt động
+## 🚀 Behavior
 
-* Chạy bình thường → hiển thị form
-* Chạy cùng Windows → ẩn xuống tray
+* 🟢 Normal run → show main form
+* ⚫ Startup (Windows) → run in background (tray)
 
 ---
 
-## ⚠️ Lưu ý
+## ⚠️ Notes
 
-* TrayManager.dll phải cùng thư mục EXE
-* Callback phải dùng stdcall
-* Chỉ hỗ trợ Windows
+* `TrayManager.dll` must be in the same folder as the EXE
+* Callback must use `stdcall`
+* Windows only
 
 ---
 
 ## 👨‍💻 Author
 
-Kieu Manh
+**Kieu Manh**
 
 ---
-
